@@ -1,0 +1,110 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="nicche (generated)" id="1617983345974-5">
+        <createTable tableName="operation_roles">
+            <column name="operation_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-6">
+        <createTable tableName="resource_permission">
+            <column name="operation_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="permission" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-7">
+        <createTable tableName="user_operation">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="operation_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-8">
+        <addColumn tableName="user_roles">
+            <column name="user_role" type="VARCHAR(255 BYTE)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-9">
+        <addColumn tableName="user">
+            <column name="active" type="BIT(1)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-10">
+        <createIndex indexName="FK_Operation_Perm" tableName="user_operation">
+            <column name="operation_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-11">
+        <createIndex indexName="FK_Operations_Roles" tableName="operation_roles">
+            <column name="operation_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-12">
+        <createIndex indexName="FK_User_Perm" tableName="user_operation">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-13">
+        <createIndex indexName="FKtijxj4dfoapab09g4gk0i3e05" tableName="resource_permission">
+            <column name="operation_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-14">
+        <addForeignKeyConstraint baseColumnNames="operation_id" baseTableName="operation_roles" constraintName="FK_Operations_Roles" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="operation" validate="true"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-15">
+        <addForeignKeyConstraint baseColumnNames="operation_id" baseTableName="resource_permission" constraintName="FKtijxj4dfoapab09g4gk0i3e05" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="operation" validate="true"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-16">
+        <dropTable tableName="user_operation_permission"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-17">
+        <dropColumn columnName="created_by" tableName="user"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-18">
+        <dropColumn columnName="creation_date" tableName="user"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-19">
+        <dropColumn columnName="is_active" tableName="user"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-20">
+        <dropColumn columnName="last_modified_by" tableName="user"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-21">
+        <dropColumn columnName="last_modified_date" tableName="user"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-22">
+        <dropColumn columnName="operationpermission" tableName="user"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-23">
+        <dropColumn columnName="role" tableName="user_roles"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-1">
+        <dropForeignKeyConstraint baseTableName="user_operation" constraintName="FK_Operation_Perm"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-2">
+        <addForeignKeyConstraint baseColumnNames="operation_id" baseTableName="user_operation" constraintName="FK_Operation_Perm" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="operation"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-3">
+        <dropForeignKeyConstraint baseTableName="user_operation" constraintName="FK_User_Perm"/>
+    </changeSet>
+    <changeSet author="nicche (generated)" id="1617983345974-4">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_operation" constraintName="FK_User_Perm" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+</databaseChangeLog>

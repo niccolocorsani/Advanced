@@ -1,0 +1,59 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="niccolo.corsani" id="202101191704-1">
+
+        <createTable tableName="user_operation_permission">
+            <column name="user_id" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="operation_id" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="permision" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet author="niccolo.corsani" id="202101191704-2">
+        <createTable tableName="operation">
+            <column name="id" type="BIGINT(19)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="niccolo.corsani" id="202101191704-3">
+        <addColumn tableName="user">
+            <column name="name" type="VARCHAR(255)" />
+            <column name="surname" type="VARCHAR(255)" />
+        </addColumn>
+    </changeSet>
+
+<!--quando vado a referenziare con ForeignKey, assicurarsi di aver messo il    <constraints primaryKey="true" nullable="false"/>> dove c è la primaryKey-->
+    <changeSet author="niccolo.corsani" id="202101191704-4">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_operation_permission"
+                                 constraintName="FK_User_Perm"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"
+                                 validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="operation_id"
+                                 baseTableName="user_operation_permission"
+                                 constraintName="FK_Operation_Perm"
+                                 referencedColumnNames="id"
+                                 referencedTableName="operation"
+                                 validate="true"/>
+    </changeSet>
+</databaseChangeLog>

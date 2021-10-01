@@ -1,0 +1,153 @@
+---
+server:
+  port: 8080
+  servlet:
+    context-path: /operations-backend
+spring:
+  application:
+    name: operations-backend
+  profiles:
+    active: test
+  liquibase:
+    change-log: classpath:liquibase/master.xml
+    enabled: true
+  security:
+    enabled: false
+    basic:
+      enabled: false
+
+
+
+---
+logging:
+  file: /logs/operations.log
+
+---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+---
+info:
+  build: # https://github.com/spring-projects/spring-boot/issues/8438 spiegazione per gli apici
+    name: '@project.name@'
+    description: '@project.description@' #Recuperato dal pom
+    version: '@project.version@' #Recuperato dal pom
+  profile: ${SPRING_PROFILES_ACTIVE} #Da variabile di sistema omonima
+
+---
+info:
+  build: # https://github.com/spring-projects/spring-boot/issues/8438 spiegazione per gli apici
+    name: '@project.name@'
+    description: '@project.description@' #Recuperato dal pom
+    version: '@project.version@' #Recuperato dal pom
+  profile: ${SPRING_PROFILES_ACTIVE} #Da variabile di sistema omonima
+
+---
+spring:
+  profiles: h2db
+  jpa:
+    open-in-view: false #per levare warnig OpenSessionInView
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: CET
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+
+  datasource:
+
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+---
+spring:
+  profiles: test
+  jpa:
+    open-in-view: false #per levare warnig OpenSessionInView
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: CET
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://localhost:3306/operations-liquibase?useSSL=false
+    username: operations
+    password: operations
+
+
+
+---
+
+spring:
+  profiles: test1
+  jpa:
+    open-in-view: false #per levare warnig OpenSessionInView
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: CET
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://mysql-db2:3306/customer?createDatabaseIfNotExist=true
+    username: operations
+    password: operations
+
+
+
+---
+
+spring:
+  profiles: test2
+  jpa:
+    open-in-view: false #per levare warnig OpenSessionInView
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:3306/hibernate1?createDatabaseIfNotExist=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: operations
+    password: operations
+
+
+#con la stringa createData operations-hibernate il carattere "-" da problemi
+#createDatabaseIfNotExist=true necessario
+
+
+---
+
+
+spring:
+  profiles: test3
+  jpa:
+    open-in-view: false #per levare warnig OpenSessionInView
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:3306/operations-hibernate?&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: operations
+    password: operations
+
+---

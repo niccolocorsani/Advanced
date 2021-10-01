@@ -1,0 +1,16 @@
+/target/
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### others ###
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+src/main/resources/liquibase-outputChangeLog.xml
+/logs

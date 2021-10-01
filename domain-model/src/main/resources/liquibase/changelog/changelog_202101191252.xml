@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="niccolo.corsani" id="202101191252-1">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT(19)" autoIncrement="true">   <!-- autoIncrement necessario per matchare GenerationType.IDENTITY-->
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="is_active" type="BIT(1)"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="creation_date" type="datetime"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="subject" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="external_id" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="operationpermission" type="VARCHAR(255)">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="niccolo.corsani" id="202101191252-2">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="alessio.grassi" id="202101191252-3">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_roles"
+                                 constraintName="FK_User_Roles"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"
+                                 validate="true"/>
+    </changeSet>
+
+
+
+
+</databaseChangeLog>

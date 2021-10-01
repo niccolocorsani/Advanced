@@ -1,0 +1,62 @@
+Affinchè possa navigare su localhost:8080 devo fare il mapping delle porte su docker: -p 8080:8080 -p 50000:50000
+Jenkins per funzionare github eseguire a terminale xcode-select --install
+Il git su jenkins va messo nella forma:
+https://niccolocorsani94:Grifone.12@bitbucket.org/niccolocorsani94/operations-backend-giusto.git
+con la passwrd accanto al nome
+--------------------------------------------------------------------------------------------------
+
+Installare Maven e JDK in global configuration----> per accedere a tools {
+                                                                       jdk 'openjdk-11'
+                                                                       maven 'mymaven'
+
+                                                                     }
+openjdk-11 e mymaven sono i nomi che ho dato nelle configurazioni globali.
+--------------------------------------------------------------------------------------------------
+
+Per utilizzare docker come qui sotto è necessario scaricare i plug-in "docker", "docker-pipeline", "pipeline-utility-steps", "dokcer-build-step", "CloudBees Docker-build and publish plug-in"
+in Jenkins
+agent {
+     docker{
+        image "maven:3.6.3-jdk-11"
+         }
+
+--------------------------------------------------------------------------------------------------
+
+
+
+Per accedere ai comandi docker nell'immagine, fare come segue:
+
+
+ACCEDERE A BASH JENKINS
+docker exec --user="root" -it jenkinswithdocker bash
+
+INSTALLARE COMANDI DOCKER
+apt-get update && apt-get install -y docker.io
+
+COMMIT
+docker commit myjenkins jenkinswithdockercommand
+
+RILANCIARE CONTAINER CON PRIVILEGI
+(https://stackoverflow.com/questions/63566621/running-jenkins-on-docker-container-cannot-connect-to-the-docker-daemon-at-unix)
+docker run -p 8080:8080 -p 50000:50000 --name jenkinswithdocker -v jenkins_home:/var/jenkins_home -v jenkins_downloads:/var/jenkins_home/downloads --privileged -v /var/run/docker.sock:/var/run/docker.sock jenkinswithdockercommand
+
+RIACCEDERE A BASH CON
+docker exec --user="root" -it jenkinswithdocker bash
+E fare chmod 777 /var/run/docker.sock
+
+--------------------------------------------------------------------------------------------------
+
+
+PER FARE UPLOAD SU DOCKERHUB
+
+Per gestire credenziali:
+
+https://medium.com/swlh/jenkins-pipeline-to-create-docker-image-and-push-to-docker-hub-721919512f2
+
+Serve questo bind -v /usr/bin/docker:/usr/bin/docker
+
+docker run -p 8080:8080 -p 50000:50000 --name jjjj -v jenkins_home:/var/jenkins_home -v jenkins_downloads:/var/jenkins_home/downloads --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker jj
+
+
+
+--------------------------------------------------------------------------------------------------

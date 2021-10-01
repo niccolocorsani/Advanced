@@ -1,0 +1,31 @@
+
+
+spring:
+  profiles:
+    active: junit-test #Questo è importante, se no non attiva il profilo in questione, anche se ce nè uno solo nel file
+---
+spring:
+  profiles: junit-test
+  liquibase:
+    change-log: classpath:../liquibase/master.xml
+    enabled: false
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: CET
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop #importante mettere create qui se no da megaErrore
+
+  datasource:
+
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sad
+    password: sad
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

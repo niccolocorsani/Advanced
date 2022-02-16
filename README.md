@@ -27,3 +27,6 @@ docker pull niccocorsa/front-end-advanced-programming:latest
 2- eseguire l'immagine scaricata con map alla porta 80
 
 docker run -d -it -p 80:80/tcp --name angular-app niccocorsa/front-end-advanced-programming:latest
+
+Relation:[Advanced Programming.pdf](https://github.com/niccolocorsani/Advanced/files/8080562/Advanced.Programming.pdf)
+
